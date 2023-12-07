@@ -9,6 +9,9 @@ changeColorBtn.addEventListener("click", () => {
     colorArray[Math.floor(Math.random() * colorArray.length)];
 });
 
+// Local storage for picnic items
+const savedItems = JSON.parse(localStorage.getItem('picnicItems')) || [];
+
 const addItemBtn = document.getElementById("add-btn");
 
 addItemBtn.addEventListener("click", () => {
@@ -21,7 +24,8 @@ addItemBtn.addEventListener("click", () => {
   errorMessage.textContent = "";
   const ul = document.getElementById("listItem").firstElementChild;
   const li = createLiElement(inputBackpack.value);
-  console.log(li);
+  savedItems.push(li.textContent);
+  localStorage.setItem('picnicItems', JSON.stringify(savedItems));
   ul.appendChild(li);
 });
 
@@ -31,6 +35,7 @@ const createLiElement = (item) => {
   return li;
 };
 
+// Local storage for user information
 const formSection = document.getElementById("input-list");
 const inputs = formSection.getElementsByTagName("input");
 const submitBtn = document.getElementById("submit-btn");
@@ -54,5 +59,9 @@ submitBtn.addEventListener("click", (e) => {
       "Password is Invalid make sure to contain uppercase, lowercase, number and special character";
   } else {
     errorMessage.textContent = "Successfully! Yay";
+    // Save user information to local storage
+    localStorage.setItem('username', username);
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
   }
 });
